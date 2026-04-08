@@ -95,72 +95,13 @@
 
     function setStatus(msg) { status.textContent = msg; }
 
-    // ---- アザラシ顔描画 ----
+    // ---- アザラシ画像の読み込み ----
+    const sealImg = new Image();
+    sealImg.src = 'seal.png';
+
+    // ---- アザラシ画像描画 ----
     function drawSeal(x, y, w, h) {
-      const cx = x + w / 2;
-      const cy = y + h / 2;
-      const rx = w / 2;
-      const ry = h / 2;
-
-      ctx.save();
-
-      // 顔（楕円）
-      ctx.fillStyle = '#b0c4de';
-      ctx.beginPath();
-      ctx.ellipse(cx, cy + ry * 0.05, rx, ry * 0.95, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // 額（少し暗く）
-      ctx.fillStyle = '#8fa8c8';
-      ctx.beginPath();
-      ctx.ellipse(cx, cy - ry * 0.25, rx * 0.75, ry * 0.45, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // 目（左右）
-      const eyeY  = cy - ry * 0.1;
-      const eyeRx = rx * 0.18;
-      const eyeRy = eyeRx * 1.1;
-      [[cx - rx * 0.28, eyeY], [cx + rx * 0.28, eyeY]].forEach(([ex, ey]) => {
-        ctx.fillStyle = '#1a1a2e';
-        ctx.beginPath();
-        ctx.ellipse(ex, ey, eyeRx, eyeRy, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = 'rgba(255,255,255,0.85)';
-        ctx.beginPath();
-        ctx.ellipse(ex + eyeRx * 0.3, ey - eyeRy * 0.25, eyeRx * 0.3, eyeRy * 0.3, 0, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      // 鼻
-      const noseY = cy + ry * 0.2;
-      ctx.fillStyle = '#4a3040';
-      ctx.beginPath();
-      ctx.ellipse(cx, noseY, rx * 0.2, ry * 0.12, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // ひげ
-      ctx.strokeStyle = 'rgba(255,255,255,0.85)';
-      ctx.lineWidth = Math.max(1, rx * 0.025);
-      ctx.lineCap = 'round';
-      [-1, 1].forEach(side => {
-        for (let i = 0; i < 3; i++) {
-          const wy = noseY + (i - 1) * ry * 0.1;
-          ctx.beginPath();
-          ctx.moveTo(cx + side * rx * 0.05, wy);
-          ctx.lineTo(cx + side * rx * 0.72, wy + (i - 1) * ry * 0.06);
-          ctx.stroke();
-        }
-      });
-
-      // 口
-      ctx.strokeStyle = '#4a3040';
-      ctx.lineWidth = Math.max(1.5, rx * 0.04);
-      ctx.beginPath();
-      ctx.moveTo(cx - rx * 0.15, noseY + ry * 0.15);
-      ctx.quadraticCurveTo(cx, noseY + ry * 0.3, cx + rx * 0.15, noseY + ry * 0.15);
-      ctx.stroke();
-
-      ctx.restore();
+      ctx.drawImage(sealImg, x, y, w, h);
     }
 
     // ---- 検出ループ（setTimeout で順番待ち） ----
